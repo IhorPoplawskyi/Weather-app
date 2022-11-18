@@ -1,0 +1,22 @@
+.resultsBlock {
+    width: 505px;
+    border: 1px solid black;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+.visible {
+    visibility: visible;
+}
+
+.resultsBlockItem {
+    cursor: pointer;
+    opacity: 50%;
+    font-weight: bold;
+}
+
+.resultsBlockItem:hover {
+    background-color: rgb(15, 132, 222);
+}

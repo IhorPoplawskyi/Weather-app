@@ -5,6 +5,9 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-image: url('../public/sky3.webp');
+  background-position: center center;
+	background-attachment: fixed;
 }
 
 code {
