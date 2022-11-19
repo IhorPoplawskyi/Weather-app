@@ -34,11 +34,11 @@ interface IListItem {
     dt_txt: string
     main: main
     visibility: number
-    weather: weather
+    weather: weather[]
     wind: wind
 }
 
-export interface FiveDaysForecast {
+export interface IFiveDaysForecast {
     city: city
     list: IListItem[]
 }

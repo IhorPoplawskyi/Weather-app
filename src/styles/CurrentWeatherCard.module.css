@@ -1,6 +1,6 @@
 .container {
-    width: 700px;
-    height: 210px;
+    width: 40%;
+    height: 19%;
     margin-top: 15px;
     background-color: rgb(0, 0, 0);
     border: 1px solid black;
@@ -23,6 +23,5 @@
 }
 
 .item {
-    /* border: 1px solid red; */
-    width: 33.3%;
+    width: 50%;
 }

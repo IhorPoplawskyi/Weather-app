@@ -11,7 +11,7 @@ const CurrentWeatherCard: React.FC<CurrentWeather> = ({dt, main, name, sys, time
     const humidity = Math.round(main!?.humidity);
     const pressure = Math.round(main!?.pressure);
     return (
-        <div onBlur={() => {console.log('aboba')}} className={s.container}>
+        <div className={s.container}>
             <div className={s.item}>
                 <div>Станом на: {currentTime}</div>
                 <div className={s.mainTemp}>{mainTemp}°C</div>

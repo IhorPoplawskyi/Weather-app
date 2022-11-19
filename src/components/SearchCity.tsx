@@ -2,24 +2,18 @@ import React, { useState, useEffect, useRef } from "react"
 import s from '../styles/SearchCity.module.css'
 import useDebounce from "../hooks/useDebounce";
 import { CurrentWeather } from "../interfaces/interfaceCurrnetWeather";
-import { FiveDaysForecast } from "../interfaces/interfaceFiveDaysForecast";
+import { IFiveDaysForecast } from "../interfaces/interfaceFiveDaysForecast";
 import CurrentWeatherCard from "./CurrentWeatherCard";
 import Results from "./Results";
-
-interface searchResponse {
-    name: string
-    country: string
-    state?: string
-    lat: number
-    lon: number
-}
+import { searchCityResponse } from "../interfaces/interfaceSearchCityResponse";
+import FiveDaysForecast from "./FIveDaysForecast";
 
 const SearchCity: React.FC = () => {
     const [city, setCity] = useState<string>('');
-    const [results, setResults] = useState<searchResponse[] | null>(null);
+    const [results, setResults] = useState<searchCityResponse[] | null>(null);
     const [isSearching, setIsSearching] = useState<boolean>(false);
     const [currentWeather, setCurrentWeather] = useState<CurrentWeather | null>(null);
-    const [fiveDaysForecast, setFiveDaysForecast] = useState<FiveDaysForecast | null>(null);
+    const [fiveDaysForecast, setFiveDaysForecast] = useState<IFiveDaysForecast | null>(null);
     const [visibleResults, setVisibleResults] = useState<boolean>(true);
 
     const fetchCity = async (city: string) => {
@@ -29,8 +23,8 @@ const SearchCity: React.FC = () => {
     }
 
     const selectCity = async (lat: number, lon: number) => {
-        const responseCurrent = await fetch(`https://api.openweathermap.org/data/2.5/weather?lang=ua&lat=${lat}&lon=${lon}&units=metric&appid=f7841575af92153d37ecc7de51c0eaf6`)
-        const responseFiveDays = await fetch(`http://api.openweathermap.org/data/2.5/forecast?lang=ua&lat=${lat}&lon=${lon}&units=metric&appid=f7841575af92153d37ecc7de51c0eaf6`)
+        const responseCurrent = await fetch(`https://api.openweathermap.org/data/2.5/weather?&lat=${lat}&lon=${lon}&units=metric&appid=f7841575af92153d37ecc7de51c0eaf6`)
+        const responseFiveDays = await fetch(`http://api.openweathermap.org/data/2.5/forecast?&lat=${lat}&lon=${lon}&units=metric&appid=f7841575af92153d37ecc7de51c0eaf6`)
         const dataCurrent = await responseCurrent.json();
         const dataFiveDays = await responseFiveDays.json();
         setCurrentWeather(dataCurrent)
@@ -43,7 +37,7 @@ const SearchCity: React.FC = () => {
     useEffect(() => {
         if (debouncedSearchTerm) {
             setIsSearching(true);
-            fetchCity(debouncedSearchTerm).then(results => {
+            fetchCity(debouncedSearchTerm).then(() => {
                 setIsSearching(false);
             });
         }
@@ -60,6 +54,7 @@ const SearchCity: React.FC = () => {
             />
             {results && visibleResults && <Results results={results} selectCity={selectCity} setVisible={setVisibleResults} />}
             {currentWeather && <CurrentWeatherCard {...currentWeather} />}
+            <FiveDaysForecast fiveDaysForecast={fiveDaysForecast}/>
         </div>
     );
 }
