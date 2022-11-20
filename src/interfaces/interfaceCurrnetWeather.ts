@@ -24,7 +24,7 @@ interface wind {
     gust: number
     speed: number
 }
-export interface CurrentWeather {
+export interface ICurrentWeather {
     dt?: number
     main?: main
     name?: string

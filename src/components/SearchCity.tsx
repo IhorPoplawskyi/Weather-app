@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from "react"
+import React, { useState, useEffect } from "react"
 import s from '../styles/SearchCity.module.css'
 import useDebounce from "../hooks/useDebounce";
-import { CurrentWeather } from "../interfaces/interfaceCurrnetWeather";
+import { ICurrentWeather } from "../interfaces/interfaceCurrnetWeather";
 import { IFiveDaysForecast } from "../interfaces/interfaceFiveDaysForecast";
 import CurrentWeatherCard from "./CurrentWeatherCard";
 import Results from "./Results";
@@ -12,7 +12,7 @@ const SearchCity: React.FC = () => {
     const [city, setCity] = useState<string>('');
     const [results, setResults] = useState<searchCityResponse[] | null>(null);
     const [isSearching, setIsSearching] = useState<boolean>(false);
-    const [currentWeather, setCurrentWeather] = useState<CurrentWeather | null>(null);
+    const [currentWeather, setCurrentWeather] = useState<ICurrentWeather | null>(null);
     const [fiveDaysForecast, setFiveDaysForecast] = useState<IFiveDaysForecast | null>(null);
     const [visibleResults, setVisibleResults] = useState<boolean>(true);
 
@@ -54,7 +54,7 @@ const SearchCity: React.FC = () => {
             />
             {results && visibleResults && <Results results={results} selectCity={selectCity} setVisible={setVisibleResults} />}
             {currentWeather && <CurrentWeatherCard {...currentWeather} />}
-            <FiveDaysForecast fiveDaysForecast={fiveDaysForecast}/>
+            {fiveDaysForecast && <FiveDaysForecast fiveDaysForecast={fiveDaysForecast}/> }
         </div>
     );
 }

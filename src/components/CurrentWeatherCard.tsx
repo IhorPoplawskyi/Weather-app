@@ -1,9 +1,9 @@
 import React from 'react'
 import s from '../styles/CurrentWeatherCard.module.css'
-import { CurrentWeather } from '../interfaces/interfaceCurrnetWeather'
+import { ICurrentWeather } from '../interfaces/interfaceCurrnetWeather'
 import capitalize from '../helpers/capitalize'
 
-const CurrentWeatherCard: React.FC<CurrentWeather> = ({dt, main, name, sys, timezone, visibility, weather, wind}) => {
+const CurrentWeatherCard: React.FC<ICurrentWeather> = ({dt, main, name, sys, timezone, visibility, weather, wind}) => {
     const currentTime = new Date(dt! * 1000).toLocaleTimeString()
     const mainTemp = Math.round(main!?.temp)
     const description = capitalize(weather![0].description);
