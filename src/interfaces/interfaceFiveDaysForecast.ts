@@ -29,7 +29,7 @@ interface wind {
     gust: number
     speed: number
 }
-interface IListItem {
+export interface IListItem {
     dt: number
     dt_txt: string
     main: main
