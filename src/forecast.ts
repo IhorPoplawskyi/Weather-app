@@ -1,4 +1,4 @@
-export const forecastCurrent = {
+export const MockForecastCurrent = {
     "coord": {
         "lon": 28.6717,
         "lat": 50.2618
@@ -43,7 +43,7 @@ export const forecastCurrent = {
     "cod": 200
 }
 
-export const forecastFiveDays = {
+export const MockForecastFiveDays = {
     "cod": "200",
     "message": 0,
     "cnt": 40,

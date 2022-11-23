@@ -10,6 +10,8 @@ const CurrentWeatherCard: React.FC<ICurrentWeather> = ({dt, main, name, sys, tim
     const feelsLike = Math.round(main!?.feels_like);
     const humidity = Math.round(main!?.humidity);
     const pressure = Math.round(main!?.pressure);
+    const sunrise = new Date(sys!?.sunrise * 1000).toLocaleTimeString().slice(0,5);
+    const sunset = new Date(sys!?.sunset * 1000).toLocaleTimeString().slice(0,5);
     return (
         <div className={s.container}>
             <div className={s.item}>
@@ -22,6 +24,8 @@ const CurrentWeatherCard: React.FC<ICurrentWeather> = ({dt, main, name, sys, tim
                 <div>Feels like: {feelsLike}°C</div>
                 <div>Humidity: {humidity}%</div>
                 <div>Pressure: {pressure} mm</div>
+                <div>Sunrise: {sunrise}</div>
+                <div>Sunset: {sunset}</div>
             </div>
         </div>
     )
