@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IFiveDaysForecast, IListItem } from '../interfaces/interfaceFiveDaysForecast'
 import s from '../styles/FiveDaysForecast.module.css'
 import DetailForecast from "./DetailForecast";
@@ -10,23 +10,26 @@ interface props {
 const FiveDaysForecast: React.FC<props> = ({ fiveDaysForecast }) => {
   const weekday = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-  const currentDayOfMonth = new Date().getDate()
-  const forecastByDays = [];
-  for (let i = 0; i < 6; i++) {
-    forecastByDays.push(fiveDaysForecast?.list.filter(el => new Date(el.dt * 1000).getDate() === currentDayOfMonth + i))
+  const currentDayOfMonth = new Date().getTime()
+  const [forecast, setForecast] = useState<IListItem[][]>([]);
+  const [active, setActive] = useState<number>();
+  const days = (index: number) => {
+    return fiveDaysForecast!?.list.filter(el => new Date(el.dt * 1000).toDateString() === new Date(currentDayOfMonth + (index * 86400000)).toDateString())
   }
-  const [details, setDetails] = useState<IListItem[] | undefined>(); 
-  if (!details) setDetails(forecastByDays[0])
-  const [active, setActive] = useState<number>(forecastByDays![0]![0].dt);
+  useEffect(() => {
+    setForecast([days(0), days(1), days(2), days(3), days(4), days(5)])
+  }, [fiveDaysForecast])
+  useEffect(() => {
+    setActive(fiveDaysForecast?.list[0].dt)
+  }, [forecast])
 
   return (
     <>
       <div className={s.container}>
-        {forecastByDays.map(el => {
+        {forecast.map(el => {
           let dates = el?.map(el => el.dt * 1000);
-
           return (
-            <div onClick={() => {setDetails(el); setActive(el![0].dt)} } key={el![0].dt} className={active === el![0].dt ? s.itemActive : s.item}>
+            <div onClick={() => setActive(el![0].dt)} key={el![0].dt} className={active === el![0].dt ? s.itemActive : s.item}>
               <div>{weekday[new Date(dates![0]).getDay()]}</div>
               <div>{new Date(dates![0]).getDate()}</div>
               <div>{month[new Date(dates![0]).getMonth()]}</div>
@@ -43,7 +46,7 @@ const FiveDaysForecast: React.FC<props> = ({ fiveDaysForecast }) => {
           )
         })}
       </div>
-      <DetailForecast details={details}/>
+      {/* {<DetailForecast details={details}/>} */}
     </>
   )
 }

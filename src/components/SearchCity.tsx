@@ -13,8 +13,8 @@ const SearchCity: React.FC = () => {
     const [city, setCity] = useState<string>('');
     const [results, setResults] = useState<searchCityResponse[] | null>(null);
     const [isSearching, setIsSearching] = useState<boolean>(false);
-    const [currentWeather, setCurrentWeather] = useState<ICurrentWeather | null>(MockForecastCurrent);
-    const [fiveDaysForecast, setFiveDaysForecast] = useState<IFiveDaysForecast | null>(MockForecastFiveDays);
+    const [currentWeather, setCurrentWeather] = useState<ICurrentWeather | null>(null);
+    const [fiveDaysForecast, setFiveDaysForecast] = useState<IFiveDaysForecast | null>(null);
     const [visibleResults, setVisibleResults] = useState<boolean>(true);
 
     const fetchCity = async (city: string) => {

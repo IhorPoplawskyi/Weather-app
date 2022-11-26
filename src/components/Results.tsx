@@ -22,7 +22,7 @@ const Results: React.FC<props> = ({ results, selectCity, setVisible }) => {
                 <div key={el.lat}
                     onClick={() => selectCity(el.lat, el.lon)}
                     className={s.resultsBlockItem}>
-                    {`${el.name}, ${el.country}`}
+                    {`${el.name}, ${el.country} ${el.state !== undefined ? el.state : ''}`}
                 </div>)}
         </div>
     )
