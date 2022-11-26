@@ -25,12 +25,12 @@ interface wind {
     speed: number
 }
 export interface ICurrentWeather {
-    dt: number
-    main: main
-    name: string
-    sys: sys
-    timezone: number
-    visibility: number
-    weather: weather[]
-    wind: wind
+    dt: number | undefined
+    main: main | undefined
+    name: string | undefined
+    sys: sys | undefined
+    timezone: number | undefined
+    visibility: number | undefined
+    weather: weather[] | undefined
+    wind: wind | undefined
 }

@@ -8,14 +8,25 @@ import Results from "./Results";
 import { searchCityResponse } from "../interfaces/interfaceSearchCityResponse";
 import FiveDaysForecast from "./FIveDaysForecast";
 import { MockForecastCurrent, MockForecastFiveDays } from "../forecast";
+import { useAppDispatch, useAppSelector } from "../redux/store";
+import { getCurrentWeatherThunk } from "../redux/forecastSlice";
+import { useSelector } from "react-redux";
 
 const SearchCity: React.FC = () => {
+    const dispatch = useAppDispatch()
+    const store = useAppSelector(state => state.forecastSlice.currentWeather)
+    console.log(store)
+
     const [city, setCity] = useState<string>('');
     const [results, setResults] = useState<searchCityResponse[] | null>(null);
     const [isSearching, setIsSearching] = useState<boolean>(false);
     const [currentWeather, setCurrentWeather] = useState<ICurrentWeather | null>(null);
     const [fiveDaysForecast, setFiveDaysForecast] = useState<IFiveDaysForecast | null>(null);
     const [visibleResults, setVisibleResults] = useState<boolean>(true);
+
+    useEffect(() => {
+        dispatch(getCurrentWeatherThunk(30.5233, 50.45))
+    }, [])
 
     const fetchCity = async (city: string) => {
         const response = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=5&appid=f7841575af92153d37ecc7de51c0eaf6`)

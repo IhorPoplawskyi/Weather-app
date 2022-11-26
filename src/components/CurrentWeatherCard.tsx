@@ -13,9 +13,9 @@ const CurrentWeatherCard: React.FC<ICurrentWeather> = ({dt, main, sys, weather, 
     const pressure = Math.round(main!?.pressure);
     const sunrise = new Date(sys!?.sunrise * 1000).toLocaleTimeString().slice(0,5);
     const sunset = new Date(sys!?.sunset * 1000).toLocaleTimeString().slice(0,5);
-    const windSpeed = Math.round(wind.speed)
-    const windDirection = degToCompass(wind.deg)
-    const windGust = Math.round(wind.gust)
+    const windSpeed = Math.round(wind!.speed)
+    const windDirection = degToCompass(wind!.deg)
+    const windGust = Math.round(wind!.gust)
     return (
         <div className={s.container}>
             <div className={s.item}>

@@ -4,9 +4,7 @@ import SearchCity from './components/SearchCity';
 
 const App: React.FC = () => {
   return (
-    <>
       <SearchCity />
-    </>
   )
 }
 
