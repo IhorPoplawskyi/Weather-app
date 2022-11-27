@@ -1,47 +1,50 @@
 import React, { useState, useEffect } from "react"
 import s from '../styles/SearchCity.module.css'
 import useDebounce from "../hooks/useDebounce";
-import { ICurrentWeather } from "../interfaces/interfaceCurrnetWeather";
-import { IFiveDaysForecast } from "../interfaces/interfaceFiveDaysForecast";
 import CurrentWeatherCard from "./CurrentWeatherCard";
 import Results from "./Results";
 import { searchCityResponse } from "../interfaces/interfaceSearchCityResponse";
 import FiveDaysForecast from "./FIveDaysForecast";
-import { MockForecastCurrent, MockForecastFiveDays } from "../forecast";
 import { useAppDispatch, useAppSelector } from "../redux/store";
-import { getCurrentWeatherThunk } from "../redux/forecastSlice";
-import { useSelector } from "react-redux";
+import { currentDayOfMonth } from "../helpers/data";
+import { setForecastByDays, setDetailForecast } from "../redux/forecastSlice";
+import DetailForecast from "./DetailForecast";
 
 const SearchCity: React.FC = () => {
-    const dispatch = useAppDispatch()
-    const store = useAppSelector(state => state.forecastSlice.currentWeather)
-    console.log(store)
+    const dispatch = useAppDispatch();
+    const currentWeather = useAppSelector(state => state.forecastSlice.currentWeather);
+    const fiveDaysForecast = useAppSelector(state => state.forecastSlice.fiveDaysForecast);
+    const forecastByDays = useAppSelector(state => state.forecastSlice.forecastByDays);
+    const detailForecast = useAppSelector(state => state.forecastSlice.detailForecast);
+
+    const days = (index: number) => {
+        return fiveDaysForecast!?.list.filter(el => new Date(el.dt * 1000).toDateString() === new Date(currentDayOfMonth + (index * 86400000)).toDateString())
+    }
+
+    useEffect(() => {
+        if (fiveDaysForecast !== undefined) {
+            dispatch(setForecastByDays([days(0), days(1), days(2), days(3), days(4), days(5)]))
+            dispatch(setDetailForecast(days(0)))
+        }
+    }, [fiveDaysForecast])
 
     const [city, setCity] = useState<string>('');
     const [results, setResults] = useState<searchCityResponse[] | null>(null);
     const [isSearching, setIsSearching] = useState<boolean>(false);
-    const [currentWeather, setCurrentWeather] = useState<ICurrentWeather | null>(null);
-    const [fiveDaysForecast, setFiveDaysForecast] = useState<IFiveDaysForecast | null>(null);
-    const [visibleResults, setVisibleResults] = useState<boolean>(true);
+    const [coords, setCoords] = useState<number[]>();
 
     useEffect(() => {
-        dispatch(getCurrentWeatherThunk(30.5233, 50.45))
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition((position) => {
+                setCoords([position.coords.latitude, position.coords.longitude])
+            });
+        }
     }, [])
 
     const fetchCity = async (city: string) => {
         const response = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=5&appid=f7841575af92153d37ecc7de51c0eaf6`)
         const data = await response.json();
         setResults(data)
-    }
-
-    const selectCity = async (lat: number, lon: number) => {
-        const responseCurrent = await fetch(`https://api.openweathermap.org/data/2.5/weather?&lat=${lat}&lon=${lon}&units=metric&appid=f7841575af92153d37ecc7de51c0eaf6`)
-        const responseFiveDays = await fetch(`http://api.openweathermap.org/data/2.5/forecast?&lat=${lat}&lon=${lon}&units=metric&appid=f7841575af92153d37ecc7de51c0eaf6`)
-        const dataCurrent = await responseCurrent.json();
-        const dataFiveDays = await responseFiveDays.json();
-        setCurrentWeather(dataCurrent)
-        setFiveDaysForecast(dataFiveDays)
-        console.log(dataCurrent, dataFiveDays)
     }
 
     const debouncedSearchTerm = useDebounce(city, 500);
@@ -59,14 +62,14 @@ const SearchCity: React.FC = () => {
     return (
         <div className={s.container}>
             <input
-                onFocus={() => setVisibleResults(true)}
                 placeholder="enter city" className={s.input}
                 value={city}
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => { setCity(event.target.value) }}
             />
-            {results && visibleResults && <Results results={results} selectCity={selectCity} setVisible={setVisibleResults} />}
-            {currentWeather && <CurrentWeatherCard {...currentWeather} />}
-            {fiveDaysForecast && <FiveDaysForecast fiveDaysForecast={fiveDaysForecast}/> }
+            {results && <Results results={results} />}
+            {currentWeather && <CurrentWeatherCard />}
+            {forecastByDays && <FiveDaysForecast />}
+            {detailForecast && <DetailForecast />}
         </div>
     );
 }

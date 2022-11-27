@@ -1,4 +1,6 @@
 import React from 'react'
+import { getCurrentWeatherThunk, getFiveDaysForecastThunk } from '../redux/forecastSlice'
+import { useAppDispatch } from '../redux/store'
 import s from '../styles/Results.module.css'
 
 interface props {
@@ -9,18 +11,20 @@ interface props {
         lat: number
         lon: number
     }[]
-    selectCity: (lat: number, lon: number) => void
-    setVisible: (check: boolean) => void
 }
 
-const Results: React.FC<props> = ({ results, selectCity, setVisible }) => {
+const Results: React.FC<props> = ({ results }) => {
     const style = [s.resultsBlock]
+    const dispatch = useAppDispatch();
 
     return (
-        <div tabIndex={1} onBlur={() => setVisible(false)} className={style.join(' ')}>
+        <div className={style.join(' ')}>
             {results.map(el =>
                 <div key={el.lat}
-                    onClick={() => selectCity(el.lat, el.lon)}
+                    onClick={() => {
+                        dispatch(getCurrentWeatherThunk(el.lat, el.lon));
+                        dispatch(getFiveDaysForecastThunk(el.lat, el.lon));
+                    }}
                     className={s.resultsBlockItem}>
                     {`${el.name}, ${el.country} ${el.state !== undefined ? el.state : ''}`}
                 </div>)}

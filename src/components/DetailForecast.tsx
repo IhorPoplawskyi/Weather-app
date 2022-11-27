@@ -1,12 +1,9 @@
 import React from "react";
-import { IListItem } from "../interfaces/interfaceFiveDaysForecast";
+import { useAppSelector } from "../redux/store";
 import s from '../styles/DetailForecast.module.css'
 
-interface props {
-    details: IListItem[] | undefined
-}
-
-const DetailForecast: React.FC<props> = ({details}) => {
+const DetailForecast: React.FC = () => {
+    const details = useAppSelector(state => state.forecastSlice.detailForecast)
     return (
         <div className={s.hourlyForecastContainer}>
             <div className={s.hourlyForecastContainerInfo}>
