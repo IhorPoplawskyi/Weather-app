@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { getCurrentWeatherThunk, getFiveDaysForecastThunk } from '../redux/forecastSlice'
 import { useAppDispatch } from '../redux/store'
 import s from '../styles/Results.module.css'
@@ -16,9 +16,10 @@ interface props {
 const Results: React.FC<props> = ({ results }) => {
     const style = [s.resultsBlock]
     const dispatch = useAppDispatch();
+    const resultsBlock = useRef(null);
 
     return (
-        <div className={style.join(' ')}>
+        <div ref={resultsBlock} className={style.join(' ')}>
             {results.map(el =>
                 <div key={el.lat}
                     onClick={() => {

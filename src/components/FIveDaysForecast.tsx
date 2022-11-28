@@ -1,18 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { weekday, month, currentDayOfMonth } from "../helpers/data";
-import { IFiveDaysForecast, IListItem } from '../interfaces/interfaceFiveDaysForecast'
-import { setDetailForecast } from "../redux/forecastSlice";
+import React from "react";
+import { weekday, month } from "../helpers/data";
+import { setDetailForecast, setActiveDetail } from "../redux/forecastSlice";
 import { useAppDispatch, useAppSelector } from "../redux/store";
 import s from '../styles/FiveDaysForecast.module.css'
 
 const FiveDaysForecast: React.FC = () => {
   const dispatch = useAppDispatch()
-  const [active, setActive] = useState<number>();
+  const active = useAppSelector(state => state.forecastSlice.selectedDetail)
   const forecastByDays = useAppSelector(state => state.forecastSlice.forecastByDays)
-
-  useEffect(() => {
-    setActive(forecastByDays![0][0].dt)
-  }, [])
 
   return (
     <>
@@ -20,7 +15,10 @@ const FiveDaysForecast: React.FC = () => {
         {forecastByDays!.map(el => {
           let dates = el?.map(el => el.dt * 1000);
           return (
-            <div onClick={() => {setActive(el![0].dt); dispatch(setDetailForecast(el))}} key={el![0].dt} className={active === el![0].dt ? s.itemActive : s.item}>
+            <div onClick={() => {
+              dispatch(setDetailForecast(el))
+              dispatch(setActiveDetail(el[0].dt))
+            }} key={el![0].dt} className={active === el![0].dt ? s.itemActive : s.item}>
               <div>{weekday[new Date(dates![0]).getDay()]}</div>
               <div>{new Date(dates![0]).getDate()}</div>
               <div>{month[new Date(dates![0]).getMonth()]}</div>

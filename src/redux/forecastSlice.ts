@@ -8,13 +8,15 @@ interface IinitialState {
   fiveDaysForecast: IFiveDaysForecast | undefined
   forecastByDays: IListItem[][] | undefined
   detailForecast: IListItem[] | undefined
+  selectedDetail: number | undefined
 }
 
 export const initState: IinitialState = {
   currentWeather: undefined,
   fiveDaysForecast: undefined,
   forecastByDays: undefined,
-  detailForecast: undefined
+  detailForecast: undefined,
+  selectedDetail: undefined,
 }
 
 const forecastSlice = createSlice({
@@ -32,6 +34,9 @@ const forecastSlice = createSlice({
     },
     setDetailForecast(state, action: PayloadAction<IListItem[]>) {
       state.detailForecast = action.payload
+    },
+    setActiveDetail(state, action: PayloadAction<number>) {
+      state.selectedDetail = action.payload
     }
   }
 })
@@ -56,5 +61,5 @@ export const getFiveDaysForecastThunk = (lat: number, lon: number) => async(disp
   }
 }
 
-export const {getCurrentWeather, getFiveDaysForecast, setForecastByDays, setDetailForecast} = forecastSlice.actions
+export const {getCurrentWeather, getFiveDaysForecast, setForecastByDays, setDetailForecast, setActiveDetail} = forecastSlice.actions
 export default forecastSlice.reducer
