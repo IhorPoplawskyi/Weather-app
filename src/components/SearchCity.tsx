@@ -17,14 +17,24 @@ const SearchCity: React.FC = () => {
     const forecastByDays = useAppSelector(state => state.forecastSlice.forecastByDays);
     const detailForecast = useAppSelector(state => state.forecastSlice.detailForecast);
 
+    console.log(forecastByDays)
+
     const days = (index: number) => {
         return fiveDaysForecast!?.list.filter(el => new Date(el.dt * 1000).toDateString() === new Date(currentDayOfMonth + (index * 86400000)).toDateString())
     }
 
     useEffect(() => {
         if (fiveDaysForecast !== undefined) {
-            dispatch(setForecastByDays([days(0), days(1), days(2), days(3), days(4), days(5)]))
-            dispatch(setDetailForecast(days(0)))
+            if (days(0).length === 0) {
+                dispatch(setForecastByDays([days(1), days(2), days(3), days(4), days(5)]))
+                dispatch(setDetailForecast(days(1)))
+            } else if (days(5).length === 0) {
+                dispatch(setForecastByDays([days(1), days(2), days(3), days(4), days(5)]))
+                dispatch(setDetailForecast(days(0)))
+            } else {
+                dispatch(setForecastByDays([days(0), days(1), days(2), days(3), days(4), days(5)]))
+                dispatch(setDetailForecast(days(0)))
+            }
         }
     }, [fiveDaysForecast])
 
@@ -32,6 +42,7 @@ const SearchCity: React.FC = () => {
     const [results, setResults] = useState<searchCityResponse[] | null>(null);
     const [isSearching, setIsSearching] = useState<boolean>(false);
     const [coords, setCoords] = useState<number[]>();
+    console.log(fiveDaysForecast)
 
     useEffect(() => {
         if (navigator.geolocation) {
