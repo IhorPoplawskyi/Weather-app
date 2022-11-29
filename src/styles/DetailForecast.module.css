@@ -11,8 +11,29 @@
 }
 
 .hourlyForecastContainerInfo {
-    text-align: center;
+    display: flex;
     width: 20%;
+}
+
+.hourlyForecastContainerInfoItem1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 65%;
+}
+
+.hourlyForecastContainerInfoItem2 {
+    margin-top: 51px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    font-size: 12px;
+    width: 35%;
+}
+
+.itemOfInfoItem {
+    padding-top: 1.5px;
+    padding-bottom: 1.5px;
 }
 
 .hourlyForecastContainerItem {
