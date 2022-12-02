@@ -1,10 +1,10 @@
 import React from 'react';
 import './App.css';
-import SearchCity from './components/SearchCity';
+import MainPage from './components/MainPage';
 
 const App: React.FC = () => {
   return (
-      <SearchCity />
+      <MainPage />
   )
 }
 

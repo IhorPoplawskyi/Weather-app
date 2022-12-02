@@ -1,15 +1,10 @@
 .container {
+    position: relative;
     margin-top: 30px;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-}
-
-.input {
-    width: 35%;
-    height: 20px;
-    outline: none;
 }
 
 .hidden {

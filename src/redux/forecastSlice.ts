@@ -1,28 +1,40 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { AppDispatch } from "./store"
 import { ICurrentWeather } from '../interfaces/interfaceCurrnetWeather'
 import { IFiveDaysForecast, IListItem } from '../interfaces/interfaceFiveDaysForecast'
+import { searchCityResponse } from '../interfaces/interfaceSearchCityResponse'
 
 interface IinitialState {
+  city: string
+  results: searchCityResponse[] | null
   currentWeather: ICurrentWeather | undefined
   fiveDaysForecast: IFiveDaysForecast | undefined
   forecastByDays: IListItem[][] | undefined
   detailForecast: IListItem[] | undefined
   selectedDetail: number | undefined
+  isLoading: boolean
 }
 
 export const initState: IinitialState = {
+  city: '',
+  results: null,
   currentWeather: undefined,
   fiveDaysForecast: undefined,
   forecastByDays: undefined,
   detailForecast: undefined,
   selectedDetail: undefined,
+  isLoading: false,
 }
 
 const forecastSlice = createSlice({
   name: 'forecastSlice',
   initialState: initState,
   reducers: {
+    setCity(state, action: PayloadAction<string>) {
+      state.city = action.payload
+    },
+    setResults(state, action: PayloadAction<searchCityResponse[]>) {
+      state.results = action.payload
+    },
     getCurrentWeather(state, action: PayloadAction<ICurrentWeather>) {
       state.currentWeather = action.payload
     },
@@ -37,29 +49,21 @@ const forecastSlice = createSlice({
     },
     setActiveDetail(state, action: PayloadAction<number>) {
       state.selectedDetail = action.payload
-    }
+    },
+    setIsLoading(state, action: PayloadAction<boolean>) {
+      state.isLoading = action.payload
+    },
   }
 })
 
-export const getCurrentWeatherThunk = (lat: number, lon: number) => async(dispatch: AppDispatch) => {
-  try {
-    const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?&lat=${lat}&lon=${lon}&units=metric&appid=f7841575af92153d37ecc7de51c0eaf6`)
-    const data = await response.json();
-    dispatch(getCurrentWeather(data))
-  } catch (e)  {
-    console.log(e)
-  }
-}
-
-export const getFiveDaysForecastThunk = (lat: number, lon: number) => async(dispatch: AppDispatch) => {
-  try {
-    const response = await fetch(`http://api.openweathermap.org/data/2.5/forecast?&lat=${lat}&lon=${lon}&units=metric&appid=f7841575af92153d37ecc7de51c0eaf6`)
-    const data = await response.json();
-    dispatch(getFiveDaysForecast(data))
-  } catch (e)  {
-    console.log(e)
-  }
-}
-
-export const {getCurrentWeather, getFiveDaysForecast, setForecastByDays, setDetailForecast, setActiveDetail} = forecastSlice.actions
+export const {
+  setCity,
+  setResults,
+  getCurrentWeather,
+  getFiveDaysForecast,
+  setForecastByDays,
+  setDetailForecast,
+  setActiveDetail,
+  setIsLoading,
+} = forecastSlice.actions
 export default forecastSlice.reducer

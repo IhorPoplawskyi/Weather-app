@@ -14,11 +14,11 @@ const DetailForecast: React.FC = () => {
                 </div>
                 <div className={s.hourlyForecastContainerInfoItem2}>
                     <div className={s.itemOfInfoItem}>temp</div>
-                    <div className={s.itemOfInfoItem}>feels like</div>
-                    <div className={s.itemOfInfoItem}>pressure</div>
-                    <div className={s.itemOfInfoItem}>humidity</div>
+                    <div className={s.itemOfInfoItem}>f.like</div>
+                    <div className={s.itemOfInfoItem}>press.</div>
+                    <div className={s.itemOfInfoItem}>humid.</div>
                     <div className={s.itemOfInfoItem}>wind</div>
-                    <div className={s.itemOfInfoItem}>visibility</div>
+                    <div className={s.itemOfInfoItem}>visib.</div>
                 </div>
             </div>
             {details?.map(el => {

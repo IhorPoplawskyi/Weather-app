@@ -1,5 +1,5 @@
 import React from 'react'
-import { getCurrentWeatherThunk, getFiveDaysForecastThunk } from '../redux/forecastSlice'
+import { getCurrentWeatherThunk, getFiveDaysForecastThunk } from '../redux/thunks'
 import { useAppDispatch } from '../redux/store'
 import s from '../styles/Results.module.css'
 
