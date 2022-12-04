@@ -1,22 +1,23 @@
 .resultsBlock {
-    width: 35.3%;
-    border: 1px solid black;
-}
-
-.hidden {
-    visibility: hidden;
-}
-
-.visible {
-    visibility: visible;
+    position: fixed;
+    top: 6.5%;
+    width: 28.3%;
+    padding: 7px;
+    border: 1px solid rgb(109, 109, 109);
+    border-radius: 13px;    
+    z-index: 999;
+    background-color: white;
 }
 
 .resultsBlockItem {
     cursor: pointer;
-    opacity: 50%;
-    font-weight: bold;
+    font-weight: 500;
+}
+
+.resultsBlockItem::before {
+    content: url('/public/icons/search.png');
 }
 
 .resultsBlockItem:hover {
-    background-color: rgb(15, 132, 222);
+    background-color: rgb(233, 231, 231);
 }

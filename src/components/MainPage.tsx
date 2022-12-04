@@ -1,9 +1,9 @@
-import React, { useEffect } from "react"
+import React, { EventHandler, useEffect, useRef, useState } from "react"
 import { useAppDispatch, useAppSelector } from "../redux/store";
 import { currentDayOfMonth } from "../helpers/data";
 import { setForecastByDays, setDetailForecast, setActiveDetail } from "../redux/forecastSlice";
 import { getCityThunk, getCurrentWeatherThunk, getFiveDaysForecastThunk } from "../redux/thunks";
-import s from '../styles/SearchCity.module.css'
+import s from '../styles/MainPage.module.css'
 import useDebounce from "../hooks/useDebounce";
 import Input from "./Input";
 import CurrentWeatherCard from "./CurrentWeatherCard";
@@ -20,7 +20,9 @@ const MainPage: React.FC = () => {
     const forecastByDays = useAppSelector(state => state.forecastSlice.forecastByDays);
     const detailForecast = useAppSelector(state => state.forecastSlice.detailForecast);
     const isLoading = useAppSelector(state => state.forecastSlice.isLoading);
-    const results = useAppSelector(state => state.forecastSlice.results)
+    const results = useAppSelector(state => state.forecastSlice.results);
+    const [visibleResults, setVisibleResults] = useState(true);
+    const [inputRef, setInputRef] = useState();
     const debouncedSearchTerm = useDebounce(city, 500);
 
     //debouncing users inputing letters to prevent immidiate get requests
@@ -57,19 +59,27 @@ const MainPage: React.FC = () => {
     useEffect(() => {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition((pos) => {
-                console.log(pos.coords.latitude, pos.coords.longitude)
                 dispatch(getCurrentWeatherThunk(pos.coords.latitude, pos.coords.longitude));
                 dispatch(getFiveDaysForecastThunk(pos.coords.latitude, pos.coords.longitude));
             });
         }
     }, [])
 
+    const switchResultsVisibility = (e: React.MouseEvent<HTMLDivElement>) => {
+        if (e.target !== inputRef) {
+           setVisibleResults(false);
+            
+        } else if (e.target === inputRef) {
+            setVisibleResults(true);
+        }
+    }
+
     return (
         <>
-            <div className={s.container}>
-                <Input />
+            <div onClick={e => switchResultsVisibility(e)} className={s.container}>
+                <Input setInputRef={setInputRef}/>
                 {isLoading && <Preloader />}
-                {results && <Results results={results} />}
+                {results && visibleResults && <Results/>}
                 {currentWeather && <CurrentWeatherCard />}
                 {forecastByDays && <FiveDaysForecast />}
                 {detailForecast && <DetailForecast />}

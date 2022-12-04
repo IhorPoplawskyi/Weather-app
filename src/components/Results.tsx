@@ -1,25 +1,15 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import { getCurrentWeatherThunk, getFiveDaysForecastThunk } from '../redux/thunks'
-import { useAppDispatch } from '../redux/store'
+import { useAppDispatch, useAppSelector } from '../redux/store'
 import s from '../styles/Results.module.css'
 
-interface props {
-    results: {
-        name: string
-        country: string
-        state?: string
-        lat: number
-        lon: number
-    }[]
-}
-
-const Results: React.FC<props> = ({ results }) => {
-    const style = [s.resultsBlock]
+const Results: React.FC = () => {
+    const results = useAppSelector(state => state.forecastSlice.results)
     const dispatch = useAppDispatch();
 
     return (
-        <div className={style.join(' ')}>
-            {results.map(el =>
+        <div className={s.resultsBlock}>
+            {results!.map(el =>
                 <div key={el.lat}
                     onClick={() => {
                         dispatch(getCurrentWeatherThunk(el.lat, el.lon));
