@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React from 'react'
 import { getCurrentWeatherThunk, getFiveDaysForecastThunk } from '../redux/thunks'
 import { useAppDispatch, useAppSelector } from '../redux/store'
 import s from '../styles/Results.module.css'

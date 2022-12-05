@@ -1,4 +1,4 @@
-import React, { EventHandler, useEffect, useRef, useState } from "react"
+import React, { useEffect, useState } from "react"
 import { useAppDispatch, useAppSelector } from "../redux/store";
 import { currentDayOfMonth } from "../helpers/data";
 import { setForecastByDays, setDetailForecast, setActiveDetail } from "../redux/forecastSlice";
@@ -66,12 +66,7 @@ const MainPage: React.FC = () => {
     }, [])
 
     const switchResultsVisibility = (e: React.MouseEvent<HTMLDivElement>) => {
-        if (e.target !== inputRef) {
-           setVisibleResults(false);
-            
-        } else if (e.target === inputRef) {
-            setVisibleResults(true);
-        }
+        e.target !== inputRef ? setVisibleResults(false) : setVisibleResults(true)
     }
 
     return (
