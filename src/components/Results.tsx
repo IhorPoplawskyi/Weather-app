@@ -9,15 +9,16 @@ const Results: React.FC = () => {
 
     return (
         <div className={s.resultsBlock}>
-            {results!.map(el =>
-                <div key={el.lat}
-                    onClick={() => {
-                        dispatch(getCurrentWeatherThunk(el.lat, el.lon));
-                        dispatch(getFiveDaysForecastThunk(el.lat, el.lon));
-                    }}
-                    className={s.resultsBlockItem}>
-                    {`${el.name}, ${el.country} ${el.state !== undefined ? el.state : ''}`}
-                </div>)}
+            {results?.length === 0 ? <div>nothing found!</div> :
+                results!.map(el =>
+                    <div key={el.lat}
+                        onClick={() => {
+                            dispatch(getCurrentWeatherThunk(el.lat, el.lon));
+                            dispatch(getFiveDaysForecastThunk(el.lat, el.lon));
+                        }}
+                        className={s.resultsBlockItem}>
+                        {`${el.name}, ${el.country} ${el.state !== undefined ? el.state : ''}`}
+                    </div>)}
         </div>
     )
 }
