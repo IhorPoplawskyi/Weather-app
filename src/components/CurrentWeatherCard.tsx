@@ -10,7 +10,7 @@ const CurrentWeatherCard: React.FC = () => {
     return (
         <div className={s.container}>
             <div className={s.item}>
-                <div>Current weather in {state?.name} {new Date(state!.dt! * 1000).toLocaleTimeString()}</div>
+                <div>{state?.name} {new Date(state!.dt! * 1000).toLocaleTimeString()}</div>
                 <div className={s.mainTemp}>{Math.round(state!.main!?.temp)}°C</div>
                 <img src={`../icons/${state!.weather![0].icon}.png`} />
                 <div>{capitalize(state!.weather![0].description)}</div>
