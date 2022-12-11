@@ -5,14 +5,14 @@ import s from '../styles/DetailForecast.module.css'
 const DetailForecast: React.FC = () => {
     const details = useAppSelector(state => state.forecastSlice.detailForecast)
     return (
-        <div className={s.hourlyForecastContainer}>
-            <div className={s.hourlyForecastContainerInfo}>
-                <div className={s.hourlyForecastContainerInfoItem1}>
+        <div className={s.container}>
+            <div className={s.containerInfo}>
+                <div className={s.containerInfoItem1}>
                     <div>{new Date(details![0].dt * 1000).toLocaleDateString()}</div>
                     <img src={`../icons/${details![0].weather[0].icon}.png`} />
                     <div>{Math.round(details![0].main.temp)}°C</div>
                 </div>
-                <div className={s.hourlyForecastContainerInfoItem2}>
+                <div className={s.containerInfoItem2}>
                     <div className={s.itemOfInfoItem}>temp</div>
                     <div className={s.itemOfInfoItem}>f.like</div>
                     <div className={s.itemOfInfoItem}>press.</div>
@@ -24,7 +24,7 @@ const DetailForecast: React.FC = () => {
             {details?.map(el => {
                 const time = new Date(el.dt * 1000).toLocaleTimeString().slice(0, 5);
                 return (
-                    <div key={el.dt} className={s.hourlyForecastContainerItem}>
+                    <div key={el.dt} className={s.containerItem}>
                         {time}
                         <img src={`../icons/${el.weather[0].icon}.png`} />
                         <div className={s.itemsOfContainerItem}>{Math.round(el.main.temp)}°C</div>

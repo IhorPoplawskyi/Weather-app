@@ -1,4 +1,4 @@
-.hourlyForecastContainer {
+.container {
     display: flex;
     padding: 5px;
     width: 45%;
@@ -10,24 +10,24 @@
     border-top: 1px solid white;
 }
 
-.hourlyForecastContainerInfo {
+.containerInfo {
     display: flex;
     width: 20%;
 }
 
-.hourlyForecastContainerInfoItem1 {
+.containerInfoItem1 {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 65%;
 }
 
-.hourlyForecastContainerInfoItem1 img {
+.containerInfoItem1 img {
     width: 100px;
     height: 100px;
 }
 
-.hourlyForecastContainerInfoItem2 {
+.containerInfoItem2 {
     margin-top: 51px;
     display: flex;
     flex-direction: column;
@@ -40,7 +40,7 @@
     padding-bottom: 1.5px;
 }
 
-.hourlyForecastContainerItem {
+.containerItem {
     width: 10%;
     background-color: rgb(9, 8, 8);
     display: flex;
@@ -53,83 +53,83 @@
     margin-top: 3px;
 }
 
-.hourlyForecastContainerItem img {
+.containerItem img {
     width: 35px;
     height: 35px;
 }
 
 @media (max-width: 1200px) {
-    .hourlyForecastContainer {
+    .container {
         width: 55%;
     }
 }
 
 @media (max-width: 992px) {
-    .hourlyForecastContainer {
+    .container {
         width: 70%;
     }
 }
 
 @media (max-width: 767px) {
-    .hourlyForecastContainer {
+    .container {
         width: 90%;
         padding: 1px;
         font-size: 10px;
     }
 
-    .hourlyForecastContainerInfoItem1 img {
+    .container img {
         width: 50px;
         height: 50px;
     }
 
-    .hourlyForecastContainerItem img {
+    .containerItem img {
         width: 18px;
         height: 18px;
     }
 
-    .hourlyForecastContainerItem {
+    .containerItem {
         font-size: 10px;
     }
 
-    .hourlyForecastContainerInfoItem2 {
+    .containerInfoItem2 {
         font-size: 10px;
         margin-top: 33px;
     }
 }
 
 @media (max-width: 480px) {
-    .hourlyForecastContainer {
+    .container {
         width: 95%;
         flex-direction: column;
     }
 
-    .hourlyForecastContainerItem {
+    .containerItem {
         width: 100%;
         flex-direction: row;
         font-size: 11px;
     }
 
-    .hourlyForecastContainerInfo {
+    .containerInfo {
         width: 100%;
     }
 
-    .hourlyForecastContainerInfoItem1 {
+    .containerInfoItem1 {
         display: none;
     }
 
-    .hourlyForecastContainerInfoItem2 {
+    .containerInfoItem2 {
         width: 100%;
         display: flex;
         flex-direction: row;
         margin-top: 0px;
-        margin-left: 9%;
+        margin-left: 10%;
     }
 
     .itemOfInfoItem {
         display: flex;
         font-size: 12px;
         justify-content: center;
-        width: 12%;
+        width: 14%;
         margin-left: 4%;
     }
 
