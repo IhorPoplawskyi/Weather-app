@@ -27,7 +27,7 @@ const CurrentWeatherCard: React.FC = () => {
                 <img src='../icons/sunset.png'/>
                 <div>wind speed: {Math.round(state!.wind!.speed)} m/sec</div>
                 <div>wind direction: {degToCompass(state!.wind!.deg)}</div>
-                <div>wind gust: {Math.round(state!.wind!.gust)} m/sec</div>
+                {state!.wind!.gust && <div>wind gust: {Math.round(state!.wind!.gust)} m/sec</div>}
             </div>
         </div>
     )
