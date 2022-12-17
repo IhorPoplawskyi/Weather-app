@@ -24,6 +24,7 @@ const MainPage: React.FC = () => {
     const [visibleResults, setVisibleResults] = useState(true);
     const [inputRef, setInputRef] = useState();
     const debouncedSearchTerm = useDebounce(city, 500);
+    console.log(forecastByDays)
 
     //debouncing users inputing letters to prevent immidiate get requests
     useEffect(() => {

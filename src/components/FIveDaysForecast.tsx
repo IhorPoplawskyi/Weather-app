@@ -22,7 +22,7 @@ const FiveDaysForecast: React.FC = () => {
               <div>{weekday[new Date(dates![0]).getDay()]}</div>
               <div>{new Date(dates![0]).getDate()}</div>
               <div>{month[new Date(dates![0]).getMonth()]}</div>
-              <img src={`../icons/${el![0].weather[0].icon}.png`} />
+              <img src={`../icons/${el![3] ? el![3].weather[0].icon : el![0].weather[0].icon}.png`} />
               <div className={s.MinMax}>
                 <div className={s.itemMinMax}>min</div>
                 <div>max</div>

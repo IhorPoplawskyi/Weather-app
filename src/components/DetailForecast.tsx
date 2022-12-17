@@ -9,7 +9,7 @@ const DetailForecast: React.FC = () => {
             <div className={s.containerInfo}>
                 <div className={s.containerInfoItem1}>
                     <div>{new Date(details![0].dt * 1000).toLocaleDateString()}</div>
-                    <img src={`../icons/${details![0].weather[0].icon}.png`} />
+                    <img src={`../icons/${details![3] ? details![3].weather[0].icon : details![0].weather[0].icon}.png`} />
                     <div>{Math.round(details![0].main.temp)}°C</div>
                 </div>
                 <div className={s.containerInfoItem2}>
