@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from "react"
-import { useAppDispatch, useAppSelector } from "../redux/store";
+import s from '../styles/MainPage.module.css'
+
+import useDebounce from "../hooks/useDebounce";
+
+import { FC, useEffect, useState } from "react"
+
 import { currentDayOfMonth } from "../helpers/data";
+
+import { useAppDispatch, useAppSelector } from "../redux/store";
 import { setForecastByDays, setDetailForecast, setActiveDetail } from "../redux/forecastSlice";
 import { getCityThunk, getCurrentWeatherThunk, getFiveDaysForecastThunk } from "../redux/thunks";
-import s from '../styles/MainPage.module.css'
-import useDebounce from "../hooks/useDebounce";
-import Input from "./Input";
-import CurrentWeatherCard from "./CurrentWeatherCard";
-import Results from "./Results";
-import FiveDaysForecast from "./FIveDaysForecast";
-import DetailForecast from "./DetailForecast";
-import Preloader from "./Preloader";
 
-const MainPage: React.FC = () => {
+import { Input, Preloader, Results, CurrentWeatherCard, FiveDaysForecast, DetailForecast } from './index'
+
+export const MainPage: FC = (): JSX.Element => {
     const dispatch = useAppDispatch();
     const city = useAppSelector(state => state.forecastSlice.city);
     const currentWeather = useAppSelector(state => state.forecastSlice.currentWeather);
@@ -30,7 +30,7 @@ const MainPage: React.FC = () => {
         if (debouncedSearchTerm) {
             dispatch(getCityThunk(debouncedSearchTerm))
         }
-    }, [debouncedSearchTerm]);
+    }, [debouncedSearchTerm, dispatch]);
 
     //function that used to filter and convert 40 responses in every 3 hours to arrays of every single day
     const days = (index: number) => fiveDaysForecast!?.list.filter(el => new Date(el.dt * 1000).toDateString() ===
@@ -54,7 +54,7 @@ const MainPage: React.FC = () => {
                 dispatch(setActiveDetail(days(0)[0].dt))
             }
         }
-    }, [fiveDaysForecast])
+    }, [fiveDaysForecast, dispatch])
     //set up current weather and 5 days data with geolocation
     useEffect(() => {
         if (navigator.geolocation) {
@@ -70,17 +70,13 @@ const MainPage: React.FC = () => {
     }
 
     return (
-        <>
-            <div onClick={e => switchResultsVisibility(e)} className={s.container}>
-                <Input setInputRef={setInputRef}/>
-                {isLoading && <Preloader />}
-                {results && visibleResults && <Results/>}
-                {currentWeather && <CurrentWeatherCard />}
-                {forecastByDays && <FiveDaysForecast />}
-                {detailForecast && <DetailForecast />}
-            </div>
-        </>
+        <div onClick={e => switchResultsVisibility(e)} className={s.container}>
+            <Input setInputRef={setInputRef} />
+            {isLoading && <Preloader />}
+            {results && visibleResults && <Results />}
+            {currentWeather && <CurrentWeatherCard />}
+            {forecastByDays && <FiveDaysForecast />}
+            {detailForecast && <DetailForecast />}
+        </div>
     );
 }
-
-export default MainPage

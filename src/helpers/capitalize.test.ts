@@ -1,6 +1,12 @@
 import capitalize from "./capitalize";
 
-test('testing capitalize', () => {
-    expect(capitalize('aboba')).toBe('Aboba');
-    expect(capitalize('Aboba')).toBe('Aboba')
+describe('testing capitalize', () => {
+    test('testing capitalize to be', () => {
+        expect(capitalize('weather')).toBe('Weather');
+        expect(capitalize('wEATHER')).toBe('WEATHER');
+    }),
+    test('testing capitalize not to be', () => {
+        expect(capitalize('weather')).not.toBe('weather');
+        expect(capitalize('Weather')).not.toBe('weather');
+    })
 })

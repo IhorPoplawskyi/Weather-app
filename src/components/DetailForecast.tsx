@@ -1,8 +1,10 @@
-import React from "react";
-import { useAppSelector } from "../redux/store";
 import s from '../styles/DetailForecast.module.css'
 
-const DetailForecast: React.FC = () => {
+import { FC } from "react";
+
+import { useAppSelector } from "../redux/store";
+
+export const DetailForecast: FC = (): JSX.Element => {
     const details = useAppSelector(state => state.forecastSlice.detailForecast)
     return (
         <div className={s.container}>
@@ -39,5 +41,3 @@ const DetailForecast: React.FC = () => {
         </div>
     )
 }
-
-export default DetailForecast;

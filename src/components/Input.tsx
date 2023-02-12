@@ -1,13 +1,15 @@
-import React, { useRef, useEffect } from 'react'
 import s from '../styles/Input.module.css'
-import { useAppDispatch, useAppSelector } from '../redux/store'
+
+import { FC, useRef, useEffect } from 'react'
+
 import { setCity } from '../redux/forecastSlice';
+import { useAppDispatch, useAppSelector } from '../redux/store'
 
 interface IInput {
     setInputRef: (ref: any) => void
 }
 
-const Input: React.FC<IInput> = ({ setInputRef }) => {
+export const Input: FC<IInput> = ({ setInputRef }): JSX.Element => {
     const city = useAppSelector(state => state.forecastSlice.city);
     const dispatch = useAppDispatch();
     const inputRef = useRef(null);
@@ -25,5 +27,3 @@ const Input: React.FC<IInput> = ({ setInputRef }) => {
         />
     )
 }
-
-export default Input

@@ -1,9 +1,11 @@
-import React from 'react'
-import { getCurrentWeatherThunk, getFiveDaysForecastThunk } from '../redux/thunks'
-import { useAppDispatch, useAppSelector } from '../redux/store'
 import s from '../styles/Results.module.css'
 
-const Results: React.FC = () => {
+import { FC } from 'react'
+
+import { useAppDispatch, useAppSelector } from '../redux/store'
+import { getCurrentWeatherThunk, getFiveDaysForecastThunk } from '../redux/thunks'
+
+export const Results: FC = (): JSX.Element => {
     const results = useAppSelector(state => state.forecastSlice.results)
     const dispatch = useAppDispatch();
 
@@ -22,5 +24,3 @@ const Results: React.FC = () => {
         </div>
     )
 }
-
-export default Results
